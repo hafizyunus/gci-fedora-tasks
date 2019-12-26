@@ -53,7 +53,7 @@ class Game:
         master.config(menu=menu)
 
         file = Menu(menu, tearoff=0)
-        file.add_command(label='Restart', command=lambda:self.fillFrame(1))
+        file.add_command(label='Restart', command=lambda:[self.resetqNo(),self.fillFrame(qNo)])
         file.add_separator()
         file.add_command(label='Quit', command=master.destroy)
         menu.add_cascade(label='File', menu=file)
@@ -73,13 +73,7 @@ class Game:
     def fillFrame(self,Question):
         global randNum
         randNum = random.randint(1,3)
-        if randNum == 1:
-            img = PhotoImage(data=questions[Question-1][randNum-1])
-        elif randNum == 2:
-            img = PhotoImage(data=questions[Question-1][randNum-1])
-        else:
-            img = PhotoImage(data=questions[Question-1][randNum-1])
-        
+        img = PhotoImage(data=questions[Question-1][randNum-1])        
         self.image = Label(self.mainFrame, image=img)
         self.image.image = img
         self.image.grid(row=1, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
@@ -107,6 +101,9 @@ class Game:
         else:
             print('wrong')
                 
+    def resetqNo(self):
+        global qNo
+        qNo = 1
 
     def clearFrame(self):
         for widget in self.mainFrame.winfo_children():
