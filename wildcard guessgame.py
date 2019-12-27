@@ -11,11 +11,24 @@ answers = [  #[[possible answer1, possible answer2]]
     [['top secret'],['shot in the arm','shot in arm'],['first aid']],
     [['blessing in disguise'],['history repeats itself'],['step sister']],
     [['talk to the hand'],['high five'],['square meal']],
-    [['cross country'],['man overboard'],['reading between the lines']],
+    [['cross country'],['man overboard','man onboard'],['reading between the lines']],
     [['a long time ago'],['fish out of water'],['home alone']],
     [['travelling overseas'],['rosewood'],['forgotten heroes']],
-    [['an inside job'],['once upon a time'],['the last jedi']],
+    [['an inside job'],['once upon a time'],['the last jedi','last jedi']],
     [['craftmanship'],['staircase'],['centre of gravity']]
+]
+
+hints = [
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
+    ['','',''],
 ]
 
 start = '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'
@@ -83,6 +96,9 @@ class Game:
         global qNo
         qNo = 1
 
+        global score
+        score = 0
+
         style = ttk.Style(mainWin)
         style.configure("TButton", font=('wasy10', 20), padding=10)
 
@@ -98,7 +114,7 @@ class Game:
         self.mainFrame = Frame(master, width=500, height=500)
         self.mainFrame.grid(row=0,column=0)
 
-        self.lSpace = Label(self.mainFrame, width=12, height=10)
+        self.lSpace = Label(self.mainFrame, width=14, height=9)
         self.lSpace.grid(row=0, column=0)
 
         self.photo = PhotoImage(data=start) 
@@ -108,39 +124,55 @@ class Game:
     # ***** Functions *****
 
     def fillFrame(self,Question):
-        global randNum
-        randNum = random.randint(1,3)
-        img = PhotoImage(data=questions[Question-1][randNum-1])        
-        self.image = Label(self.mainFrame, image=img)
-        self.image.image = img
-        self.image.grid(row=1, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
+        try:
+            global randNum
+            randNum = random.randint(1,3)
+            img = PhotoImage(data=questions[Question-1][randNum-1])        
+            self.image = Label(self.mainFrame, image=img)
+            self.image.image = img
+            self.image.grid(row=1, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
 
-        self.answer = ttk.Entry(self.mainFrame, font='Helvetica 15', justify=LEFT)
-        self.answer.grid(row=2, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
-        self.answer.focus_set()
+            self.answer = ttk.Entry(self.mainFrame, font='Helvetica 15', justify=LEFT)
+            self.answer.grid(row=2, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
+            self.answer.focus_set()
 
-        self.comment = Label(self.mainFrame, text='', justify=CENTER, font='Helvetica 15')
-        self.comment.grid(row=3, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
+            self.comment = Label(self.mainFrame, text='', justify=CENTER, font='Helvetica 15')
+            self.comment.grid(row=3, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
 
-        self.submit = ttk.Button(self.mainFrame, text='Submit', style='TButton', command=self.Submit)
-        self.submit.grid(row=4, column=1, columnspan=2, pady=10)
+            self.submit = ttk.Button(self.mainFrame, text='Submit', style='TButton', command=self.Submit)
+            self.submit.grid(row=4, column=1, columnspan=2, pady=10)
 
-        self.hint = ttk.Button(self.mainFrame, text='Hint', style='TButton', command=self.giveHint, width=6)
-        self.hint.grid(row=5, column=3, padx=15, pady=5)
+            self.hint = ttk.Button(self.mainFrame, text='Hint', style='TButton', command=self.giveHint, width=6)
+            self.hint.grid(row=5, column=3, padx=15, pady=5)
+            
+            self.next = ttk.Button(self.mainFrame, text='Give up', style='TButton', command=self.giveUp, width=7)
+            self.next.grid(row=5, column=0, padx=15, pady=5)
 
-        self.lSpace = Label(self.mainFrame, width=17, height=4)
-        self.lSpace.grid(row=0, column=0)
+            self.lSpace = Label(self.mainFrame, width=17, height=4)
+            self.lSpace.grid(row=0, column=0)
 
-        '''self.rSpace = Label(self.mainFrame, width=10, height=10)
-        self.rSpace.grid(row=5, column=4)'''
+            '''self.rSpace = Label(self.mainFrame, width=10, height=10)
+            self.rSpace.grid(row=5, column=4)'''
 
-        global bind_id
-        bind_id = mainWin.bind('<Return>',self.Submit)
+            global bind_id
+            bind_id = mainWin.bind('<Return>',self.Submit)
+
+        except IndexError:
+            self.comment = Label(self.mainFrame, text='Your Score', justify=CENTER, font='Helvetica 20')
+            self.comment.grid(row=1, column=1)
+
+            self.showScore = Label(self.mainFrame, text=score, justify=CENTER, font='Helvetica 25')
+            self.showScore.grid(row=2, column=1)
+
+            self.lSpace = Label(self.mainFrame, width=17, height=4)
+            self.lSpace.grid(row=0, column=0)
 
     def Submit(self,*args):
         global qNo
+        global score
         uAnswer = self.answer.get().lower()
         if uAnswer in answers[qNo-1][randNum-1]:
+            score += 1
             print('correct answer')
             mainWin.unbind('<Return>',bind_id)
             qNo += 1
@@ -151,7 +183,14 @@ class Game:
             self.comment.config(text='wrong')
 
     def giveHint(self):
-        self.comment.config(text=answers[qNo-1][randNum-1][0])
+        self.comment.config(text=hints[qNo-1][randNum-1])
+
+    def giveUp(self):
+        global qNo
+        qNo += 1
+        mainWin.unbind('<Return>',bind_id)
+        self.clearFrame()
+        self.fillFrame(qNo)
                 
     def resetqNo(self):
         global qNo
@@ -165,8 +204,8 @@ class Game:
 
 mainWin = Tk()
 mainWin.resizable(False,False)
-mainWin.maxsize(500,500)
-mainWin.minsize(500,500)
+mainWin.maxsize(540,500)
+mainWin.minsize(540,500)
 app = Game(mainWin)
 mainWin.mainloop()
 
