@@ -240,6 +240,7 @@ class Game:
 
             self.clearFrame()
             self.fillFrame(master,qNo)
+            self.timer(master)
 
 
     def clearFrame(self):
