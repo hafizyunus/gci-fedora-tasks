@@ -7,18 +7,18 @@ import random
 answers = [  #[[possible answer1, possible answer2]]
     [['love at first sight'],['bad intention'],['beat around the bush']],
     [['down to earth'],['back to square one'],['big deal']],
-    [['top secret'],['shot in the arm','shot in arm'],['first aid']],
-    [['blessing in disguise'],['history repeats itself'],['step sister']],
+    [['top secret'],['shot in the arm'],['first aid']],
+    [['blessing in disguise'],['home alone'],['step sister']],
     [['talk to the hand'],['high five'],['square meal']],
-    [['cross country'],['man overboard','man onboard'],['reading between the lines']],
-    [['a long time ago'],['fish out of water'],['home alone']],
-    [['travelling overseas'],['rosewood'],['forgotten heroes']],
+    [['cross country'],['man overboard','man onboard'],['reading between the lines','read between the lines']],
+    [['a long time ago'],['fish out of water'],['history repeats itself']],
+    [['travelling overseas'],['rosewood'],['forgotten heroes','forgotten hero']],
     [['an inside job'],['once upon a time'],['the last jedi','last jedi']],
     [['craftmanship'],['staircase'],['centre of gravity']]
 ]
 
 hints = [
-    ['','','asd'],
+    ['','',''],
     ['','',''],
     ['','',''],
     ['','',''],
@@ -106,7 +106,7 @@ class Game:
         # ***** File *****
 
         file = Menu(menu, tearoff=0)
-        file.add_command(label='Restart', command=lambda:[self.reset(),self.clearFrame(),self.fillFrame(qNo)])
+        file.add_command(label='Restart', command=lambda:[self.reset(),self.clearFrame(),self.fillFrame(master,qNo)])
         file.add_separator()
         file.add_command(label='Quit', command=master.destroy)
         menu.add_cascade(label='File', menu=file)
@@ -119,7 +119,7 @@ class Game:
         # ***** Start Page *****
 
         self.photo = PhotoImage(data=start) 
-        self.start = ttk.Button(self.mainFrame, command=lambda:[self.clearFrame(),self.fillFrame(qNo)], image=self.photo)
+        self.start = ttk.Button(self.mainFrame, command=lambda:[self.clearFrame(),self.fillFrame(master,qNo)], image=self.photo)
         self.start.grid(row=1, column=1)
 
         self.lSpace = Label(self.mainFrame, width=14, height=9)
@@ -127,7 +127,7 @@ class Game:
 
     # ***** Functions *****
 
-    def fillFrame(self,Question):
+    def fillFrame(self,master,Question):
         try:
             global randNum
             randNum = random.randint(1,3)
@@ -149,7 +149,7 @@ class Game:
             self.hint = ttk.Button(self.mainFrame, text='Hint', style='TButton', command=self.giveHint, width=6)
             self.hint.grid(row=5, column=3, padx=15, pady=5)
             
-            self.next = ttk.Button(self.mainFrame, text='Give up', style='TButton', command=self.giveUp, width=7)
+            self.next = ttk.Button(self.mainFrame, text='Give up', style='TButton', command=lambda:self.giveUp(master), width=7)
             self.next.grid(row=5, column=0, padx=15, pady=5)
 
             self.lSpace = Label(self.mainFrame, width=16, height=4)
@@ -181,7 +181,7 @@ class Game:
             mainWin.unbind('<Return>',bind_id)
             qNo += 1
             self.clearFrame()
-            self.fillFrame(qNo)
+            self.fillFrame(master,qNo)
         else:
             print('wrong')
             self.comment.config(text='wrong', foreground='red')
@@ -189,13 +189,15 @@ class Game:
     def giveHint(self):
         self.comment.config(text=hints[qNo-1][randNum-1], foreground='green')
 
-    def giveUp(self):
+    def giveUp(self, master):
         global qNo
-        qNo += 1
         mainWin.unbind('<Return>',bind_id)
-        self.clearFrame()
-        self.fillFrame(qNo)
-                
+        correct =  answers[qNo-1][randNum-1][0].title()
+        self.comment.config(text='Answer: '+correct, foreground='orange', font='Helvetica 13')
+        qNo += 1
+        master.after(2000,self.clearFrame)
+        master.after(2001, self.fillFrame, master, qNo)
+
     def reset(self):
         global qNo
         qNo = 1
