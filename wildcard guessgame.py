@@ -10,7 +10,7 @@ answers = [  #[[possible answer1, possible answer2]]
     [['top secret'],['shot in the arm'],['first aid']],
     [['blessing in disguise'],['home alone'],['step sister']],
     [['talk to the hand'],['high five'],['square meal']],
-    [['cross country'],['man overboard','man onboard'],['reading between the lines','read between the lines']],
+    [['cross country'],['man overboard','man onboard'],['read between the lines','reading between the lines']],
     [['a long time ago'],['fish out of water'],['history repeats itself']],
     [['travelling overseas'],['rosewood'],['forgotten heroes','forgotten hero']],
     [['an inside job'],['once upon a time'],['the last jedi','last jedi']],
@@ -106,7 +106,7 @@ class Game:
         # ***** File *****
 
         file = Menu(menu, tearoff=0)
-        file.add_command(label='Restart', command=lambda:[self.reset(),self.clearFrame(),self.fillFrame(master,qNo)])
+        file.add_command(label='Restart', command=lambda:[self.reset(),self.clearFrame(),self.fillFrame(master,qNo),self.timer(master)])
         file.add_separator()
         file.add_command(label='Quit', command=master.destroy)
         menu.add_cascade(label='File', menu=file)
@@ -119,7 +119,7 @@ class Game:
         # ***** Start Page *****
 
         self.photo = PhotoImage(data=start) 
-        self.start = ttk.Button(self.mainFrame, command=lambda:[self.clearFrame(),self.fillFrame(master,qNo)], image=self.photo)
+        self.start = ttk.Button(self.mainFrame, command=lambda:[self.clearFrame(),self.fillFrame(master,qNo),self.timer(master)], image=self.photo)
         self.start.grid(row=1, column=1)
 
         self.lSpace = Label(self.mainFrame, width=14, height=9)
@@ -127,10 +127,13 @@ class Game:
 
     # ***** Functions *****
 
-    def fillFrame(self,master,Question):
+    def fillFrame(self, master, Question):
+
         try:
+            
             global randNum
             randNum = random.randint(1,3)
+
             img = PhotoImage(data=questions[Question-1][randNum-1])        
             self.image = Label(self.mainFrame, image=img)
             self.image.image = img
@@ -143,7 +146,10 @@ class Game:
             self.comment = Label(self.mainFrame, text='', justify=CENTER, font='Helvetica 15')
             self.comment.grid(row=3, column=1, columnspan=2, sticky=W+E+N+S, pady=10)
 
-            self.submit = ttk.Button(self.mainFrame, text='Submit', style='TButton', command=self.Submit)
+            self.timeLeft = Label(self.mainFrame, text='Time: 30', justify=CENTER, font='Helvetica 15', foreground='green')
+            self.timeLeft.grid(row=0, column=3)
+
+            self.submit = ttk.Button(self.mainFrame, text='Submit', style='TButton', command=lambda:self.Submit(master))
             self.submit.grid(row=4, column=1, columnspan=2, pady=10)
 
             self.hint = ttk.Button(self.mainFrame, text='Hint', style='TButton', command=self.giveHint, width=6)
@@ -158,22 +164,27 @@ class Game:
             global bind_id
             bind_id = mainWin.bind('<Return>',self.Submit)
 
+            global time
+            time = 30
+
         except IndexError:
+
             self.comment = Label(self.mainFrame, text='Your Score', justify=CENTER, font='Helvetica 20')
             self.comment.grid(row=1, column=1, pady=15)
 
             self.showScore = Label(self.mainFrame, text=score, justify=CENTER, font='Helvetica 25', foreground='green')
             self.showScore.grid(row=2, column=1, pady=15)
 
-            self.restart = ttk.Button(self.mainFrame, text='Try again', style='TButton', command=lambda:[self.reset(),self.clearFrame(),self.fillFrame(qNo)])
+            self.restart = ttk.Button(self.mainFrame, text='Try again', style='TButton', command=lambda:[self.reset(),self.clearFrame(),self.fillFrame(master, qNo),self.timer(master)])
             self.restart.grid(row=3, column=1, pady=15)
 
             self.lSpace = Label(self.mainFrame, width=25, height=7)
             self.lSpace.grid(row=0, column=0)
 
-    def Submit(self,*args):
+    def Submit(self, master, *args):
         global qNo
         global score
+
         uAnswer = self.answer.get().lower()
         if uAnswer in answers[qNo-1][randNum-1]:
             score += 1
@@ -182,6 +193,7 @@ class Game:
             qNo += 1
             self.clearFrame()
             self.fillFrame(master,qNo)
+
         else:
             print('wrong')
             self.comment.config(text='wrong', foreground='red')
@@ -192,21 +204,39 @@ class Game:
     def giveUp(self, master):
         global qNo
         mainWin.unbind('<Return>',bind_id)
+
         correct =  answers[qNo-1][randNum-1][0].title()
         self.comment.config(text='Answer: '+correct, foreground='orange', font='Helvetica 13')
         qNo += 1
+
         master.after(2000,self.clearFrame)
         master.after(2001, self.fillFrame, master, qNo)
 
     def reset(self):
         global qNo
-        qNo = 1
         global score
+
+        qNo = 1
         score = 0
+
+    def timer(self, master):
+        master.after(1000, self.countDown, master)
+
+    def countDown(self, master):
+        global time
+        time -= 1
+    
+        if time > 15:
+            self.timeLeft.config(text='Time: '+str(time), foreground='green')
+        else:
+            self.timeLeft.config(text='Time: '+str(time), foreground='red')
+        
+        if time > 0:
+            self.timer(master)
 
     def clearFrame(self):
         for widget in self.mainFrame.winfo_children():
-            widget.grid_remove()
+            widget.destroy()
 
 
 mainWin = Tk()
