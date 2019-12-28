@@ -225,22 +225,24 @@ class Game:
     def countDown(self, master):
         global time
         time -= 1
-    
-        if time > 15:
-            self.timeLeft.config(text='Time: '+str(time), foreground='green')
-        else:
-            self.timeLeft.config(text='Time: '+str(time), foreground='red')
-        
-        if time > 0:
-            self.timer(master)
-        else:
-            global qNo
-            qNo += 1
-            mainWin.unbind('<Return>',bind_id)
+        try:
+            if time > 15:
+                self.timeLeft.config(text='Time: '+str(time), foreground='green')
+            else:
+                self.timeLeft.config(text='Time: '+str(time), foreground='red')
+            
+            if time > 0:
+                self.timer(master)
+            else:
+                global qNo
+                qNo += 1
+                mainWin.unbind('<Return>',bind_id)
 
-            self.clearFrame()
-            self.fillFrame(master,qNo)
-            self.timer(master)
+                self.clearFrame()
+                self.fillFrame(master,qNo)
+                self.timer(master)
+        except TclError:
+            pass
 
 
     def clearFrame(self):
