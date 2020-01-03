@@ -1,0 +1,4 @@
+1. Open Run by pressing Windows key + R.
+2. Enter 'shell:startup' in the textbox and press enter.
+3. Copy and paste automation.py in the startup folder.
+4. Fin.

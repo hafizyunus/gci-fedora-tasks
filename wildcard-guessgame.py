@@ -98,7 +98,7 @@ class Game:
         score = 0
 
         style = ttk.Style(mainWin)
-        style.configure("TButton", font=('wasy10', 20), padding=10)
+        style.configure('TButton', font=('wasy10', 20), padding=10)
 
         menu = Menu(master)
         master.config(menu=menu)
